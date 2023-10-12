@@ -11,12 +11,30 @@ public class MoveGame<E> {
 
     /* Move elements as required */
     public void moveElements() {
-		// to be completed
+		  while (!stackS.isEmpty()) {
+        E element = stackS.pop();
+        dequeD.addLast(element);
+      }
+
+      while (!stackT.isEmpty()) {
+        E element = stackS.pop();
+        dequeD.addLast(element);
+        
+      }
+
+      while (!dequeD.isEmpty()) {
+        E element = dequeD.first();
+        dequeD.removeFirst();
+        stackS.push(element);
+      }
     }
 
     /* Print elements in stackS */
     public void printElements() {
-		// to be completed
+      while (!stackS.isEmpty()) {
+        E element = stackS.pop();
+        System.out.println(element);
+      }
     }
 
     public static void main(String[] args) {
