@@ -17,14 +17,13 @@ public class MoveGame<E> {
       }
 
       while (!stackT.isEmpty()) {
-        E element = stackS.pop();
+        E element = stackT.pop();
         dequeD.addLast(element);
         
       }
 
       while (!dequeD.isEmpty()) {
-        E element = dequeD.first();
-        dequeD.removeFirst();
+        E element = dequeD.removeLast();
         stackS.push(element);
       }
     }
