@@ -46,13 +46,11 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
     // provide same constructors as base class
     /** Creates a hash table with capacity 11 and prime factor 109345121. */
     public P2ChainHashMap() {
-        capacity = 14000;
-        prime = 239489;
+        capacity = 11;
+        prime = 109345121;
         Random rand = new Random(1234);  // Random seed: 1234
         scale1 = rand.nextInt(prime-1) + 1;
         shift1 = rand.nextInt(prime);
-        scale2 = rand.nextInt(prime - 1) + 1;
-        shift2 = rand.nextInt(prime);
     }
 
     /** Creates a hash table with the given capacity and hash parameters. */
@@ -61,6 +59,11 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
         prime = p;
         /** Creates an empty table having length equal to current capacity. */
         table = (UnsortedTableMap<K,V>[]) new UnsortedTableMap[capacity];
+        scale1 = 233177;
+        shift1 = 141604;
+        scale2 = 64667;
+        shift2 = 104206;
+
     }
 
     // Public methods
@@ -156,12 +159,13 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
     private int[] hashValue(K key) {
         int[] hashVals = new int[3];
         int k = key.hashCode();
-        hashVals[0] = (int) (((233177 * k + 141604) % prime) % capacity);
-        hashVals[1] = (int) (((64667 * k + 104206) % prime) % capacity);
+        hashVals[0] = (int) (((scale1 * k + shift1) % prime) % capacity);
+        hashVals[1] = (int) (((scale2 * k + shift2) % prime) % capacity);
         hashVals[2] = (int) (k % capacity);
         return hashVals;
     }
 
+    
 
     public static void main(String[] args) {
         int testNum = 10000;  // Number of records
@@ -172,11 +176,14 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
         int minKey = 30000;
         long collisions = 0;
 
-        // To be completed
+
+
+
+
         System.out.println("Number of collisions: " + collisions);
 
         // Remove entries of keys x5xxx, print out number of remaining records
-        // To be completed
+
         System.out.println("Number of remaining records: " + testMap.size());
     }
 }
