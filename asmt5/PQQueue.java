@@ -16,7 +16,7 @@ public class PQQueue<E> implements Queue<E>{
      * @param e  the element to be inserted
      */
     public void enqueue(E e) {
-        // incomplete
+       pq.insert(maxKey++,e);
     }
 
     /**
@@ -24,7 +24,12 @@ public class PQQueue<E> implements Queue<E>{
      * @return the first element of the queue (or null if empty)
      */
     public E first() {
-        // incomplete
+        Entry<Integer, E> entry = pq.min();
+        if (entry != null) {
+            return entry.getValue();
+        } else {
+            return null; // Queue is empty
+        }
     }
 
     /**
@@ -32,7 +37,12 @@ public class PQQueue<E> implements Queue<E>{
      * @return element removed (or null if empty)
      */
     public E dequeue() {
-        // incomplete
+        Entry<Integer, E> entry = pq.removeMin();
+        if (entry != null) {
+            return entry.getValue();
+        } else {
+            return null; // Queue is empty
+        }
     }
 
     /**

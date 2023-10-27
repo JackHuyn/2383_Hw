@@ -16,7 +16,9 @@ public class PQStack<E> implements Stack<E> {
      * @param e   the element to be inserted
      */
     public void push(E e) {
-        // incomplete
+        // We'll use a decreasing integer key as an identifier for the elements pushed onto the stack.
+        // This way, the most recently pushed element will have the highest priority.
+        pq.insert(pq.size(), e);
     }
 
     /**
@@ -24,7 +26,12 @@ public class PQStack<E> implements Stack<E> {
      * @return top element in the stack (or null if empty)
      */
     public E top() {
-        // incomplete
+        if (isEmpty()) {
+            return null;
+        }
+        // To get the top element, we'll find the element with the highest priority.
+        Entry<Integer, E> topEntry = pq.min();
+        return topEntry.getValue();
     }
 
     /**
@@ -32,7 +39,12 @@ public class PQStack<E> implements Stack<E> {
      * @return element removed (or null if empty)
      */
     public E pop() {
-        // incomplete
+        if (isEmpty()) {
+            return null;
+        }
+        // To pop the top element, we'll remove the element with the highest priority.
+        Entry<Integer, E> topEntry = pq.removeMin();
+        return topEntry.getValue();
     }
 
     /**

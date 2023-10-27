@@ -119,7 +119,19 @@ public class UnsortedPriorityQueue<K,V> implements PriorityQueue<K,V> {
      * @return entry having a minimal key (or null if empty)
      */
     public Entry<K,V> min() {
-        // incomplete
+        if(list.isEmpty()) 
+        {
+            return null;
+        }
+
+        Entry<K,V> minEntry = list.getFirst();
+        for (Entry<K,V> entry :list)
+        {
+            if (compare(entry,minEntry) < 0)
+            minEntry = entry;
+        }
+
+        return minEntry;
 
     }
 
@@ -128,7 +140,13 @@ public class UnsortedPriorityQueue<K,V> implements PriorityQueue<K,V> {
      * @return the removed entry (or null if empty)
      */
     public Entry<K,V> removeMin() {
-        // incomplete
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        Entry<K, V> minEntry = min();
+        list.remove(minEntry);
+        return minEntry;
 
     }
 
