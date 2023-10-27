@@ -46,11 +46,13 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
     // provide same constructors as base class
     /** Creates a hash table with capacity 11 and prime factor 109345121. */
     public P2ChainHashMap() {
-        capacity = 11;
-        prime = 109345121;
+        capacity = 14000;
+        prime = 239489;
         Random rand = new Random(1234);  // Random seed: 1234
         scale1 = rand.nextInt(prime-1) + 1;
         shift1 = rand.nextInt(prime);
+        scale2 = rand.nextInt(prime - 1) + 1;
+        shift2 = rand.nextInt(prime);
     }
 
     /** Creates a hash table with the given capacity and hash parameters. */
@@ -113,7 +115,13 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
      * @return the associated value, or null if no such entry exists
      */
     public V get(K key) {
-        // To be completed
+        int[] hashes = hashValue(key);
+        int h = hashes[0];  // the hash value of the selected bucket
+        UnsortedTableMap<K, V> bucket = table[h];
+        if (bucket != null) {
+            return bucket.get(key);
+        }
+        return null;  // key not found
     }
 
     /**
@@ -123,7 +131,17 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
      * @return the previous value associated with the removed key, or null if no such entry exists
      */
     public V remove(K key) {
-        // To be completed
+        int[] hashes = hashValue(key);
+        int h = hashes[0];  // the hash value of the selected bucket
+        UnsortedTableMap<K, V> bucket = table[h];
+        if (bucket != null) {
+            int oldSize = bucket.size();
+            V removedValue = bucket.remove(key);
+            n -= (oldSize - bucket.size());  // update the size
+
+            return removedValue;  // previous value associated with the removed key (or null if not found)
+        }
+        return null;  // key not found
     }
 
     // Private utilities
@@ -136,8 +154,12 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
      * hashVals[1], hashVals[2}: two candidate hash values
      */
     private int[] hashValue(K key) {
-        // To be completed
-
+        int[] hashVals = new int[3];
+        int k = key.hashCode();
+        hashVals[0] = (int) (((233177 * k + 141604) % prime) % capacity);
+        hashVals[1] = (int) (((64667 * k + 104206) % prime) % capacity);
+        hashVals[2] = (int) (k % capacity);
+        return hashVals;
     }
 
 
