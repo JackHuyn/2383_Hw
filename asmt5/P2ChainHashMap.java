@@ -165,7 +165,15 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
         return hashVals;
     }
 
-    
+    private static String generateRandomString(int length, Random random) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
+    }
 
     public static void main(String[] args) {
         int testNum = 10000;  // Number of records
@@ -176,14 +184,31 @@ public class P2ChainHashMap<K,V> extends AbstractMap<K,V> {
         int minKey = 30000;
         long collisions = 0;
 
+        Random random = new Random(1234);
 
 
 
+        for (int i = 0; i < testNum; i++) {
+            int key = minKey + i;
+            String value = generateRandomString(nameLen, random);
+            String previousValue = testMap.put(key, value);
+            if (previousValue != null) {
+                collisions++;
+            }
+        }
+
+       
 
         System.out.println("Number of collisions: " + collisions);
+                
 
-        // Remove entries of keys x5xxx, print out number of remaining records
+        for (int i = minKey; i < minKey + testNum; i++) {
+            if ((i / 1000) % 10 == 5) {
+                // If the key matches the pattern x5xxx, remove it
+                testMap.remove(i);
 
+            }
+        }
         System.out.println("Number of remaining records: " + testMap.size());
     }
 }
