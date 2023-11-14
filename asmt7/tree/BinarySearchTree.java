@@ -138,4 +138,16 @@ public class BinarySearchTree<E> extends LinkedBinaryTree<E> {
         System.out.print("\n");
     }
 
+    /**
+     * Returns the parent Position of p (or null if p is root).
+     *
+     * @param p A valid Position within the tree
+     * @return Parent Position of p (or null if p is root)
+     * @throws IllegalArgumentException if p is not a valid Position for this tree.
+     */
+    public Position<E> getParent(Position<E> p) throws IllegalArgumentException {
+        Node<E> node = validate(p);
+        return node.getParent();
+    }
+
 }

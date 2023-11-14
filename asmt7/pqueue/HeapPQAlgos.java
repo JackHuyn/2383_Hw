@@ -12,7 +12,13 @@ public class HeapPQAlgos<K, V> extends HeapPriorityQueue<K, V> {
      Given n entries stored in the heap, return entries with the first k smallest keys.
      */
     public ArrayList<Entry<K, V>> kSmallest(int k) {
-        // incomplete
+        ArrayList<Entry<K, V>> result = new ArrayList<>();
+
+        for (int i = 0; i < Math.min(k, size()); i++) {
+            result.add(removeMin());
+        }
+
+        return result;
 
     }
 

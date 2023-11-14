@@ -5,10 +5,42 @@ import static java.lang.Math.abs;
 public class BinaryTreeAlgos {
     /*
      Find the node whose element is closest to target.
-     */
+     *
     public static Position<Integer> findClosest() {
         // incomplete, use any signature you need for your implementation
 
+    }
+    */
+    public static Position<Integer> findClosest(Tree<Integer> tree, int target) {
+        if (tree == null || tree.isEmpty()) {
+            return null;
+        }
+
+        return findClosest(tree, tree.root(), target);
+    }
+
+    private static Position<Integer> findClosest(Tree<Integer> tree, Position<Integer> current, int target) {
+        if (current == null) {
+            return null; 
+        }
+
+        int currentElement = current.getElement();
+        Position<Integer> closest = current;
+
+        if (Math.abs(target - currentElement) < Math.abs(target - closest.getElement())) {
+            closest = current;
+        }
+
+        // Iterate through positions and find left and right children
+        for (Position<Integer> child : tree.children(current)) {
+            Position<Integer> childClosest = findClosest(tree, child, target);
+
+            if (childClosest != null && Math.abs(target - childClosest.getElement()) < Math.abs(target - closest.getElement())) {
+                closest = childClosest;
+            }
+        }
+
+        return closest;
     }
 
     public static void main(String[] args) {
@@ -27,9 +59,9 @@ public class BinaryTreeAlgos {
 
         // Question 3
         int tgt = 29;
-        Position<Integer> closestNode;
-        // Incomplete, call your method to find and print the element closest to tgt
 
+        
+        Position<Integer> closestNode = findClosest(testT, tgt);
         System.out.println("Element closest to " + tgt + " is " + closestNode.getElement());
     }
 }
