@@ -17,7 +17,6 @@ public class HeapPQAlgos<K, V> extends HeapPriorityQueue<K, V> {
         for (int i = 0; i < Math.min(k, size()); i++) {
             result.add(removeMin());
         }
-
         return result;
 
     }
@@ -25,7 +24,16 @@ public class HeapPQAlgos<K, V> extends HeapPriorityQueue<K, V> {
     /*
      Find all entries having a key less than or equal to k.
      */
-    public void subPQ() {
+    public ArrayList<Entry<K, V>> subPQ(int k) {
+
+        ArrayList<Entry<K, V>> result = new ArrayList<>();
+        for (Entry<K, V> entry : heap) {
+            if ((Integer)entry.getKey() <= k) {
+                result.add(entry);
+            }
+        }
+        return result;
+
         // incomplete, use any signature you need for your implementation
         // time complexity of your implementation should be O(m)
         // worse time complexity such as O(mlog(n)), O(nlog(n)) are not acceptable
@@ -39,14 +47,14 @@ public class HeapPQAlgos<K, V> extends HeapPriorityQueue<K, V> {
 
         // Question 1
         int k = 3;
-        ArrayList<Entry<Integer, String>> smallEntries = testPQ.kSmallest(k);
+        /*ArrayList<Entry<Integer, String>> smallEntries = testPQ.kSmallest(k);
         System.out.println("Keys of " + k + " smallest entries: ");
         for (Entry<Integer, String> e : smallEntries)
             System.out.println(e.getKey());
-
+        */
         // Question 2
         k = 7;
-        ArrayList<Entry<Integer, String>> subEntries = new ArrayList<>();
+        ArrayList<Entry<Integer, String>> subEntries = testPQ.subPQ(k);
         // Incomplete, you need to call your method and print out the result
 
         System.out.println("Keys of entries <= " + k + ": ");
