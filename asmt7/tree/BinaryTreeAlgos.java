@@ -3,14 +3,8 @@ package asmt7.tree;
 import static java.lang.Math.abs;
 
 public class BinaryTreeAlgos {
-    /*
-     Find the node whose element is closest to target.
-     *
-    public static Position<Integer> findClosest() {
-        // incomplete, use any signature you need for your implementation
-
-    }
-    */
+    
+    // Wraper class
     public static Position<Integer> findClosest(Tree<Integer> tree, int target) {
         if (tree == null || tree.isEmpty()) {
             return null;
@@ -20,27 +14,33 @@ public class BinaryTreeAlgos {
     }
 
     private static Position<Integer> findClosest(Tree<Integer> tree, Position<Integer> current, int target) {
-        if (current == null) {
-            return null; 
+        if (tree == null || tree.isEmpty()) {
+            return null;
         }
-
-        int currentElement = current.getElement();
-        Position<Integer> closest = current;
-
-        if (Math.abs(target - currentElement) < Math.abs(target - closest.getElement())) {
-            closest = current;
-        }
-
-        // Iterate through positions and find left and right children
-        for (Position<Integer> child : tree.children(current)) {
-            Position<Integer> childClosest = findClosest(tree, child, target);
-
-            if (childClosest != null && Math.abs(target - childClosest.getElement()) < Math.abs(target - closest.getElement())) {
-                closest = childClosest;
+        else
+        {
+            if (current == null) {
+                return null; 
             }
-        }
 
-        return closest;
+            int currentElement = current.getElement();
+            Position<Integer> closest = current;
+
+            if (Math.abs(target - currentElement) < Math.abs(target - closest.getElement())) {
+                closest = current;
+            }
+
+            // Iterate through positions and find left and right children
+            for (Position<Integer> child : tree.children(current)) {
+                Position<Integer> childClosest = findClosest(tree, child, target);
+
+                if (childClosest != null && Math.abs(target - childClosest.getElement()) < Math.abs(target - closest.getElement())) {
+                    closest = childClosest;
+                }
+            }
+
+            return closest;
+        }
     }
 
     public static void main(String[] args) {
