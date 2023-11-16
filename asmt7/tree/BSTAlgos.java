@@ -5,6 +5,7 @@ import java.lang.Integer;
 import static java.lang.Math.abs;
 
 public class BSTAlgos {
+    // Wraper class
     public static Position<Integer> findClosest(BinarySearchTree<Integer> bst, int target) {
         if (bst == null || bst.isEmpty()) {
             return null;
